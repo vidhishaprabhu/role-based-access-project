@@ -8,7 +8,7 @@ import { Roles } from './decorators/roles.decorator';
 import { UserRole } from './entities/user.entity';
 import { RolesGuard } from './guards/roles.guard';
 import * as bcrypt from 'bcrypt';
-
+//Created the controller for auth
 @Controller('auth')
 export class AuthController {
   constructor(private authService:AuthService){bcrypt.hash('vidisha@123',3).then(console.log)}
