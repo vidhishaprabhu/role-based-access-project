@@ -9,10 +9,7 @@ export class CreatePostDto{
   @IsString({message:'Content must be string'})
   @MinLength(3,{message:'Content must be atleast 3 in character set'})
   content:string;
-  @IsNotEmpty({message:'author-name is required'})
-  @IsString({message:'author-name must be string'})
-  @MinLength(3,{message:'author-name must be atleast 3 in character set'})
-  authorName:string
+  
 
 
 
