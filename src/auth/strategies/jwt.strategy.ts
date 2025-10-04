@@ -16,10 +16,11 @@ export class JwtStrategy extends PassportStrategy(Strategy){
     try{
       const user=this.authservice.getUserById(payload.id);
       return{
-        user,
+        id:(await user).id,
+        email:(await user).email,
+        name:(await user).name,
         role:payload.role
       }
-
     }
     catch(error){
       throw new UnauthorizedException('Invalid token')

@@ -5,7 +5,7 @@ export class PostExistPipe implements PipeTransform{
   constructor(private readonly postService:PostsService){}
   transform(value: any, metadata: ArgumentMetadata) {
     try{
-        this.postService.findOne(value);
+        // this.postService.findOne(value);
     }
     catch(e){
       throw new NotFoundException(`Post not found for Id ${value}`)

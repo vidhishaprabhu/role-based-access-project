@@ -21,13 +21,16 @@ export class PostsService {
 async findOne(id: number): Promise<Post> {
   const singlePost = await this.postRepository.findOne({
     where: { id },
-    relations: ['author'], 
+    relations: ['author'],  
   });
+
   if (!singlePost) {
     throw new NotFoundException(`Post with id ${id} is not found`);
   }
+
   return singlePost;
 }
+
 
 async create(createPostData: CreatePostDto, author: User): Promise<Post> {
   const newPost = this.postRepository.create({
@@ -52,12 +55,18 @@ async create(createPostData: CreatePostDto, author: User): Promise<Post> {
     return this.postRepository.save(findPost);
     
   }
-  async remove(id:number,user:User): Promise<Post>{
-    const index= await this.findOne(id);
-    if(index.author.id!==user.id && user.role!==UserRole.ADMIN){
-      throw new ForbiddenException('You can only delete your own post')
-    }
-    return this.postRepository.remove(index);
+  async remove(id: number, user: User): Promise<Post> {
+  const post = await this.postRepository.findOne({
+    where: { id },
+    relations: ['author'],
+  });
+
+  if (!post) {
+    throw new NotFoundException(`Post with id ${id} not found`);
   }
+
+  return this.postRepository.remove(post);
+}
+
 
 }

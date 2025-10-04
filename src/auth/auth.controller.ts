@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
-import { JwtAuthGauard } from './guards/jwt.guard';
+import { JwtAuthGuard } from './guards/jwt.guard';
 import { CurrentUser } from './decorators/currrent-user.decorator';
 import { Roles } from './decorators/roles.decorator';
 import { UserRole } from './entities/user.entity';
@@ -24,14 +24,14 @@ export class AuthController {
   refreshToken(@Body('refreshToken') refreshToken:string){
     return this.authService.refreshToken(refreshToken);
   }
-  @UseGuards(JwtAuthGauard)
+  @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@CurrentUser() user:any){
     return user;
   }
   @Post('create-admin')
   @Roles(UserRole.ADMIN)
-  @UseGuards(JwtAuthGauard,RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   createAdmin(@Body() registerDto:RegisterDto){
     return this.authService.createAdmin(registerDto);
   }
